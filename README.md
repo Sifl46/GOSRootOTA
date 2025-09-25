@@ -1,12 +1,12 @@
 # OTA Host
 
-This branch hosts OTA for PixeneOS (GrapheneOS++)
+This branch hosts OTA for GOSRootOTA
 
 This OTA comes in 3 flavors:
 
-- [magisk](https://Sifl46.github.io/PixeneOS/magisk/)
-- [kitsunemagisk](https://Sifl46.github.io/PixeneOS/kitsunemagisk/)
-- [rootless](https://Sifl46.github.io/PixeneOS/rootless/)
+- [magisk](https://Sifl46.github.io/GOSRootOTA/magisk/)
+- [kitsunemagisk](https://Sifl46.github.io/GOSRootOTA/kitsunemagisk/)
+- [rootless](https://Sifl46.github.io/GOSRootOTA/rootless/)
 
 ## Usage
 
