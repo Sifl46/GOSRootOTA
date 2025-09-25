@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # This project is highly dependent on chenxiaolong's projects.
-# Project PixeneOS needs to be up-to-date with chenxiaolong's projects
+# Project GOSRootOTA needs to be up-to-date with chenxiaolong's projects
 
 # make code more robust by catching unset variables, detecting errors in pipelines, and halting execution upon encountering errors
 set -o nounset -o pipefail -o errexit
