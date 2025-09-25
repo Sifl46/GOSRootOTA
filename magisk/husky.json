@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "full": {
+    "location_ota": "https://github.com/pixincreate/PixeneOS/releases/download/2025091900/husky-2025091900-magisk-30200-e308263.zip",
+    "location_csig": "https://github.com/pixincreate/PixeneOS/releases/download/2025091900/husky-2025091900-magisk-30200-e308263.zip.csig"
+  }
+}
