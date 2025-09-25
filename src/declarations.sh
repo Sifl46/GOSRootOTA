@@ -18,6 +18,7 @@ ARCH="x86_64-unknown-linux-gnu" # for Linux
 # Initial setup environment variables
 CLEANUP="${CLEANUP:-'false'}"                # Clean up after the script finishes
 DEVICE_NAME="${DEVICE_NAME:-}"               # Device name, passed from the CI environment
+KITSUNE="${KITSUNE:-}"                       # If we use KitsuneMagisk or not
 INTERACTIVE_MODE="${INTERACTIVE_MODE:-true}" # Enable interactive mode
 WORKDIR=".tmp"
 
@@ -40,8 +41,8 @@ MAGISK[PREINIT]="${MAGISK_PREINIT:-}"
 MAGISK[REPOSITORY]="${USER}/Magisk"
 MAGISK[URL]="${DOMAIN}/${MAGISK[REPOSITORY]}"
 # KitsuneMagisk
-KITSUNE[REPOSITORY]="1q23lyc45/KitsuneMagisk"
-KITSUNE[URL]="${DOMAIN}/${KITSUNE[REPOSITORY]}"
+KITSUNEMAGISK[REPOSITORY]="1q23lyc45/KitsuneMagisk"
+KITSUNEMAGISK[URL]="${DOMAIN}/${KITSUNE[REPOSITORY]}"
 
 # Keys
 KEYS[AVB]="${KEYS[AVB]:-avb.key}"
