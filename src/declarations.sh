@@ -23,8 +23,8 @@ WORKDIR=".tmp"
 
 # GitHub variables
 DOMAIN="https://github.com"
-REPOSITORY="PixeneOS" # GitHub repository name
-USER="pixincreate"    # GitHub username
+REPOSITORY="GOSRootOTA" # GitHub repository name
+USER="Sifl46"    # GitHub username
 
 # Application version variables
 VERSION[AFSR]="${VERSION[AFSR]:-1.0.3}"
@@ -35,10 +35,10 @@ VERSION[GRAPHENEOS]="${VERSION[GRAPHENEOS]:-}"
 VERSION[MAGISK]="${VERSION[MAGISK]:-}"
 VERSION[OEMUNLOCKONBOOT]="${VERSION[OEMUNLOCKONBOOT]:-1.3}"
 
-# Magisk
+# pixincreateMagisk
 MAGISK[PREINIT]="${MAGISK_PREINIT:-}"
-MAGISK[REPOSITORY]="${USER}/Magisk"
-MAGISK[URL]="${DOMAIN}/${MAGISK[REPOSITORY]}"
+MAGISK[REPOSITORY]="pixincreate/Magisk"
+MAGISK[URL]="${DOMAIN}/pixincreate/Magisk"
 
 # Keys
 KEYS[AVB]="${KEYS[AVB]:-avb.key}"
