@@ -15,6 +15,11 @@ on:
         required: false
         type: boolean
         default: false
+      kitsune:
+        description: Use KitsuneMagisk
+        required: false
+        type: boolean
+        default: false
       magisk-preinit-device:
         description: Magisk preinit device. For example, "sda8", "sda15" etc.,
         required: false
@@ -105,6 +110,8 @@ jobs:
             required_assets=(
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-magisk-*.zip"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-magisk-*.zip.csig"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-kitsunemagisk-*.zip"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-kitsunemagisk-*.zip.csig"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-rootless-*.zip"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-rootless-*.zip.csig"
             )
@@ -143,8 +150,8 @@ jobs:
                 fi
               done
 
-              # Check if valid_build is either "magisk" or "rootless"
-              if [[ "$valid_build" == "magisk" ]] || [[ "$valid_build" == "rootless" ]]; then
+              # Check if valid_build is either "magisk", "kitsunemagisk" or "rootless"
+              if [[ "$valid_build" == "magisk" ]] || [[ "$valid_build" == "kitsunemagisk" ]] || [[ "$valid_build" == "rootless" ]]; then
                 echo -e "Proceeding with build to create missing assets..."
               else
                 echo -e "::error::Asset with \`$build_flavor\` flavor already exists!"
@@ -220,10 +227,10 @@ jobs:
         if: github.event.inputs.release-type != 'build-only'
         run: |
           CURRENT_COMMIT=$(git rev-parse --short HEAD)
-          FLAVOR=("magisk" "rootless")
+          FLAVOR=("magisk" "kitsunemagisk" "rootless")
           root=${{ github.event.inputs.root }}
 
-          # Create `magisk` and `rootless` directories if they don't exist
+          # Create `magisk`, `kitsunemagisk` and `rootless` directories if they don't exist
           mkdir -p "${FLAVOR}"
 
           # Switch to gh-pages branch
@@ -231,10 +238,14 @@ jobs:
           echo -e "Updating Configs for the new release..."
 
           # If root is true or the the release has `magisk` in <device_name>.json, use magisk flavor
-          if [ "${root}" = "true" ] || grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
-            TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
+          if [ "${root}" = "true" ] then
+            if grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
+              TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
+            else if grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
+              TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
+            fi
           else
-            TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
+            TARGET_FILE="${FLAVOR[2]}/${{ env.DEVICE_NAME }}.json"
           fi
 
           echo -e "Updating Configs for the new release..."
