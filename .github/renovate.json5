@@ -27,33 +27,6 @@
       customType: "regex",
       fileMatch: ["src/declarations.sh"],
       matchStrings: [
-        'VERSION\\[ALTERINSTALLER\\]=\\"\\$\\{VERSION\\[ALTERINSTALLER\\]:-(?<currentValue>.*?)\\}"',
-      ],
-      depNameTemplate: "chenxiaolong/AlterInstaller",
-      datasourceTemplate: "github-releases",
-    },
-    {
-      customType: "regex",
-      fileMatch: ["src/declarations.sh"],
-      matchStrings: [
-        'VERSION\\[MSD\\]=\\"\\$\\{VERSION\\[MSD\\]:-(?<currentValue>.*?)\\}"',
-      ],
-      depNameTemplate: "chenxiaolong/MSD",
-      datasourceTemplate: "github-releases",
-    },
-    {
-      customType: "regex",
-      fileMatch: ["src/declarations.sh"],
-      matchStrings: [
-        'VERSION\\[BCR\\]=\\"\\$\\{VERSION\\[BCR\\]:-(?<currentValue>.*?)\\}"',
-      ],
-      depNameTemplate: "chenxiaolong/BCR",
-      datasourceTemplate: "github-releases",
-    },
-    {
-      customType: "regex",
-      fileMatch: ["src/declarations.sh"],
-      matchStrings: [
         'VERSION\\[OEMUNLOCKONBOOT\\]=\\"\\$\\{VERSION\\[OEMUNLOCKONBOOT\\]:-(?<currentValue>.*?)\\}"',
       ],
       depNameTemplate: "chenxiaolong/OEMUnlockOnBoot",
