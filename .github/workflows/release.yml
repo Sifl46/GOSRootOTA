@@ -239,11 +239,10 @@ jobs:
           echo -e "Updating Configs for the new release..."
 
           # If root is true or the the release has `magisk` in <device_name>.json, use magisk flavor
-          if [ "${root}" = "true" ] then
-            if grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
-              TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
-            else if grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
-              TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
+          if [ "${root}" = "true" ] && grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
+            TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
+          else if [ "${root}" = "true" ] && grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
+            TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
           else
             TARGET_FILE="${FLAVOR[2]}/${{ env.DEVICE_NAME }}.json"
           fi
