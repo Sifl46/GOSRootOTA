@@ -65,7 +65,11 @@ function check_and_download_dependencies() {
     RETRY_COUNT=0 # Reset retry count for magisk
     while true; do
       # Magisk is an exception as it is an APK and hecne we do the get call directly and verif its existence
-      get "magisk" "${MAGISK[URL]}/releases/download/canary-${VERSION[MAGISK]}/app-release.apk"
+      if [[ "${KITSUNE}" == "true" ]]; then
+        get "magisk" "${KITSUNEMAGISK[URL]}/releases/download/v27.2-${VERSION[MAGISK]}/app-release.apk"
+      else
+        get "magisk" "${MAGISK[URL]}/releases/download/canary-${VERSION[MAGISK]}/app-release.apk"
+      fi
       verify_downloads "magisk"
 
       [[ "${ADDITIONALS[RETRY]}" == "true" ]] && [[ "${RETRY}" == "true" ]] || break
