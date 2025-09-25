@@ -98,7 +98,7 @@ jobs:
         if: github.event_name == 'schedule' || github.event.inputs.release-type == 'default'
         run: |
           # Determine if the build is based on magisk or rootless (build flavor)
-          build_flavor=$([[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && echo 'magisk' || echo 'rootless')
+          build_flavor=$([[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && echo 'magisk' || [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'true' }} == 'true' ]] && echo 'kitsunemagisk' || echo 'rootless')
 
           # Check if the tag exists
           if git show-ref --tags $GRAPHENEOS_VERSION --quiet; then
@@ -239,11 +239,15 @@ jobs:
           echo -e "Updating Configs for the new release..."
 
           # If root is true or the the release has `magisk` in <device_name>.json, use magisk flavor
-          if [ "${root}" = "true" ] && grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
+          if [ "${root}" = "true" ] && [ ! -f "${TARGET_FILE}" ] && grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
             TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
-          else if [ "${root}" = "true" ] && grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
+          fi
+
+          if [ "${root}" = "true" ] && [ ! -f "${TARGET_FILE}" ] && grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
             TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
-          else
+          fi
+
+          if [ ! -f "${TARGET_FILE}" ]; then
             TARGET_FILE="${FLAVOR[2]}/${{ env.DEVICE_NAME }}.json"
           fi
 
