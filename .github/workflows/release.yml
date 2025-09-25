@@ -98,7 +98,7 @@ jobs:
         if: github.event_name == 'schedule' || github.event.inputs.release-type == 'default'
         run: |
           # Determine if the build is based on magisk or rootless (build flavor)
-          build_flavor=$([[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && echo 'magisk' || [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'true' }} == 'true' ]] && echo 'kitsunemagisk' || echo 'rootless')
+          build_flavor=$([[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'false' }} == 'true' ]]  && echo 'magisk' || [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'true' }} == 'true' ]] && echo 'kitsunemagisk' || echo 'rootless')
 
           # Check if the tag exists
           if git show-ref --tags $GRAPHENEOS_VERSION --quiet; then
