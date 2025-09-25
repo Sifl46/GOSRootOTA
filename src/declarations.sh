@@ -27,14 +27,11 @@ USER="pixincreate"    # GitHub username
 
 # Application version variables
 VERSION[AFSR]="${VERSION[AFSR]:-1.0.3}"
-VERSION[ALTERINSTALLER]="${VERSION[ALTERINSTALLER]:-2.2}"
 VERSION[AVBROOT]="${VERSION[AVBROOT]:-3.22.0}"
 VERSION[AVBROOT_SETUP]="16636c3" # Commit hash
-VERSION[BCR]="${VERSION[BCR]:-1.80}"
 VERSION[CUSTOTA]="${VERSION[CUSTOTA]:-5.16}"
 VERSION[GRAPHENEOS]="${VERSION[GRAPHENEOS]:-}"
 VERSION[MAGISK]="${VERSION[MAGISK]:-}"
-VERSION[MSD]="${VERSION[MSD]:-1.16}"
 VERSION[OEMUNLOCKONBOOT]="${VERSION[OEMUNLOCKONBOOT]:-1.3}"
 
 # Magisk
@@ -62,10 +59,7 @@ GRAPHENEOS[OTA_TARGET]="${GRAPHENEOS[OTA_TARGET]:-}"             # Will be const
 
 # Modules
 ADDITIONALS[AFSR]="${ADDITIONALS[AFSR]:-true}"                       # Android File system repack
-ADDITIONALS[ALTERINSTALLER]="${ADDITIONALS[ALTERINSTALLER]:-true}"   # Spoof Android package manager installer fields
-ADDITIONALS[BCR]="${ADDITIONALS[BCR]:-true}"                         # Basic Call Recorder
 ADDITIONALS[CUSTOTA]="${ADDITIONALS[CUSTOTA]:-true}"                 # Custom OTA Updater app
-ADDITIONALS[MSD]="${ADDITIONALS[MSD]:-true}"                         # Mass Storage Device on USB
 ADDITIONALS[OEMUNLOCKONBOOT]="${ADDITIONALS[OEMUNLOCKONBOOT]:-true}" # toggle OEM unlock button on boot
 # Tools
 ADDITIONALS[AVBROOT]="${ADDITIONALS[AVBROOT]:-true}"                   # Android Verified Boot Root
