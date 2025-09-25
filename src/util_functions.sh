@@ -66,7 +66,7 @@ function check_and_download_dependencies() {
     while true; do
       # Magisk is an exception as it is an APK and hecne we do the get call directly and verif its existence
       if [[ "${KITSUNE}" == "true" ]]; then
-        get "magisk" "${KITSUNEMAGISK[URL]}/releases/download/v27.2-${VERSION[MAGISK]}/app-release.apk"
+        get "magisk" "https://github.com/1q23lyc45/KitsuneMagisk/releases/download/v27.2-kitsune-4/app-release.apk"
       else
         get "magisk" "${MAGISK[URL]}/releases/download/canary-${VERSION[MAGISK]}/app-release.apk"
       fi
