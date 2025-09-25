@@ -4,8 +4,8 @@ This branch hosts OTA for PixeneOS (GrapheneOS++)
 
 This OTA comes in 3 flavors:
 
-- [magisk](https://Sifl46.github.io/PixeneOS/kitsunemagisk/)
-- [kitsunemagisk](https://Sifl46.github.io/PixeneOS/magisk/)
+- [magisk](https://Sifl46.github.io/PixeneOS/magisk/)
+- [kitsunemagisk](https://Sifl46.github.io/PixeneOS/kitsunemagisk/)
 - [rootless](https://Sifl46.github.io/PixeneOS/rootless/)
 
 ## Usage
