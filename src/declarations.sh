@@ -6,7 +6,7 @@ declare -A AVBROOT
 declare -A GRAPHENEOS
 declare -A KEYS
 declare -A MAGISK
-declare -A KITSUNE
+declare -A KITSUNEMAGISK
 declare -A OUTPUTS
 declare -A VERSION
 
