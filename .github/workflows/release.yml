@@ -39,6 +39,7 @@ on:
 env:
   CARGO_INCREMENTAL: 1
   DEVICE_NAME: ${{ github.event.inputs.device-id }}
+  KITSUNE: ${{ github.event.inputs.kitsune }}
   INTERACTIVE_MODE: false
   GRAPHENEOS_UPDATE_CHANNEL: ${{ github.event.inputs.update-channel }}
   RUST_BACKTRACE: short
