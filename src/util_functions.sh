@@ -453,7 +453,11 @@ function make_directories() {
 
 function generate_ota_info() {
   # Detect build flavor
-  local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "magisk-${VERSION[MAGISK]}" || echo "rootless")
+  if [[ "${KITSUNE}" == "true" ]]; then
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "kitsunemagisk-v27.2-kitsune-4" || echo "rootless")
+  else
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "magisk-${VERSION[MAGISK]}" || echo "rootless")
+  fi
   # e.g. bluejay-2024082200-rootless-abc12345-dirty.zip
   OUTPUTS[PATCHED_OTA]="${DEVICE_NAME}-${VERSION[GRAPHENEOS]}-${flavor}-$(git rev-parse --short HEAD)$(dirty_suffix).zip"
 }
