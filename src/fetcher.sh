@@ -7,7 +7,7 @@ source src/declarations.sh
 # Fetch the latest version of GrapheneOS and Magisk and sets up the OTA URL
 function get_latest_version() {
   local latest_grapheneos_version=$(curl -sL "${GRAPHENEOS[OTA_BASE_URL]}/${DEVICE_NAME}-${GRAPHENEOS[UPDATE_CHANNEL]}" | sed 's/ .*//')
-    if [[ "${KITSUNE}" == 'true' ]]; then
+    if [[ "${KITSUNE}" == "true" ]]; then
       local latest_magisk_version=$(
         git ls-remote --tags "${DOMAIN}/${KITSUNEMAGISK[REPOSITORY]}.git" |
           awk -F'\t' '{print $2}' |
