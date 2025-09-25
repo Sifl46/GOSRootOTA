@@ -203,7 +203,7 @@ function patch_ota() {
     args+=("--verify-public-key-avb" "${grapheneos_pkmd}")
     args+=("--verify-cert-ota" "${grapheneos_otacert}")
 
-    # PixeneOS decoded keys and certificates
+    # GOSRootOTA decoded keys and certificates
     args+=("--sign-key-avb" "${KEYS[AVB]}")
     args+=("--sign-key-ota" "${KEYS[OTA]}")
     args+=("--sign-cert-ota" "${KEYS[CERT_OTA]}")
