@@ -1,7 +1,7 @@
 {
   "version": 2,
   "full": {
-    "location_ota": "https://github.com/Sifl46/GOSRootOTA/releases/download/2025091900/husky-2025091900-kitsunemagisk-v27.2-kitsune-4-7e76ce3.zip",
-    "location_csig": "https://github.com/Sifl46/GOSRootOTA/releases/download/2025091900/husky-2025091900-kitsunemagisk-v27.2-kitsune-4-7e76ce3.zip.csig"
+    "location_ota": "https://github.com/Sifl46/GOSRootOTA/releases/download/2025092500/husky-2025092500-kitsunemagisk-v27.2-kitsune-4-983ec11.zip",
+    "location_csig": "https://github.com/Sifl46/GOSRootOTA/releases/download/2025092500/husky-2025092500-kitsunemagisk-v27.2-kitsune-4-983ec11.zip.csig"
   }
 }
