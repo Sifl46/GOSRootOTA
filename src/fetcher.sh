@@ -4,18 +4,9 @@
 
 source src/declarations.sh
 
-# Fetch the latest version of GrapheneOS and Magisk and sets up the OTA URL
+# Fetch the latest version of GrapheneOS and sets up the OTA URL
 function get_latest_version() {
   local latest_grapheneos_version=$(curl -sL "${GRAPHENEOS[OTA_BASE_URL]}/${DEVICE_NAME}-${GRAPHENEOS[UPDATE_CHANNEL]}" | sed 's/ .*//')
-    local latest_magisk_version=$(
-      git ls-remote --tags "${DOMAIN}/${MAGISK[REPOSITORY]}.git" |
-        awk -F'\t' '{print $2}' |
-        grep -E 'refs/tags/' |
-        sed 's/refs\/tags\///' |
-        sort -V |
-        tail -n1 |
-        sed 's/canary-//'
-      )
 
   if [[ GRAPHENEOS[UPDATE_TYPE] == "install" ]]; then
     echo -e "The update type is set to \`install\` which is not supported by AVBRoot.\nExiting..."
@@ -38,16 +29,9 @@ function get_latest_version() {
   if [[ -z "${VERSION[GRAPHENEOS]}" ]]; then
     VERSION[GRAPHENEOS]="${GRAPHENEOS_VERSION:-${latest_grapheneos_version}}"
   fi
-
-  if [[ -z "${latest_magisk_version}" ]]; then
-    echo -e "Failed to get the latest Magisk version."
-    exit 1
-  else
-    VERSION[MAGISK]="${latest_magisk_version}"
-  fi
 }
 
-# Getter function to download the magisk, modules, signatures and tools
+# Getter function to download the modules, signatures and tools
 function get() {
   local filename="${1}"
   local url="${2}"
@@ -59,7 +43,7 @@ function get() {
   if [[ "${filename}" == "my-avbroot-setup" ]]; then
     git clone "${url}" "${WORKDIR}/tools/${filename}" && git -C "${WORKDIR}/tools/${filename}" checkout "${VERSION[AVBROOT_SETUP]}"
   else
-    if [[ "${filename}" == "magisk" ]]; then
+    if [[ "${filename}" == "magisk" ]] || [[ "${filename}" == "apatch" ]]; then
       suffix="apk"
     else
       suffix="zip"

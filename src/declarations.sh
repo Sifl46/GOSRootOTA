@@ -17,7 +17,8 @@ ARCH="x86_64-unknown-linux-gnu" # for Linux
 # Initial setup environment variables
 CLEANUP="${CLEANUP:-'false'}"                # Clean up after the script finishes
 DEVICE_NAME="${DEVICE_NAME:-}"               # Device name, passed from the CI environment
-KITSUNE="${KITSUNE:-}"                       # If we use KitsuneMagisk or not
+ROOT="${ROOT:-}"                             # if root
+ROOT_TYPE="${ROOT_TYPE:-}"                   # Type of root we use
 INTERACTIVE_MODE="${INTERACTIVE_MODE:-true}" # Enable interactive mode
 WORKDIR=".tmp"
 
@@ -35,10 +36,8 @@ VERSION[GRAPHENEOS]="${VERSION[GRAPHENEOS]:-}"
 VERSION[MAGISK]="${VERSION[MAGISK]:-}"
 VERSION[OEMUNLOCKONBOOT]="${VERSION[OEMUNLOCKONBOOT]:-1.3}"
 
-# pixincreateMagisk
+# Magisk
 MAGISK[PREINIT]="${MAGISK_PREINIT:-}"
-MAGISK[REPOSITORY]="pixincreate/Magisk"
-MAGISK[URL]="${DOMAIN}/pixincreate/Magisk"
 
 # Keys
 KEYS[AVB]="${KEYS[AVB]:-avb.key}"

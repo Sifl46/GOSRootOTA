@@ -64,13 +64,25 @@ function check_and_download_dependencies() {
   if [[ "${ADDITIONALS[ROOT]}" == 'true' ]]; then
     RETRY_COUNT=0 # Reset retry count for magisk
     while true; do
-      # Magisk is an exception as it is an APK and hecne we do the get call directly and verif its existence
-      if [[ "${KITSUNE}" == "true" ]]; then
+      # Magisk is an exception as it is an APK and hence we do the get call directly and verify its existence
+      if [[ "${DEVICE_TYPE}" == "magisk" ]]; then
+        echo -e "Magisk downloaded."
+        get "magisk" "https://github.com/topjohnwu/Magisk/releases/download/v29.0/Magisk-v29.0.apk"
+      fi
+
+      if [[ "${DEVICE_TYPE}" == "pixincreatemagisk" ]]; then
+        echo -e "PixincreateMagisk downloaded."
+        get "magisk" "https://github.com/pixincreate/Magisk/releases/download/canary-30400/app-release.apk"
+      fi
+
+      if [[ "${DEVICE_TYPE}" == "kitsunemagisk" ]]; then
         echo -e "KitsuneMagisk downloaded."
         get "magisk" "https://github.com/1q23lyc45/KitsuneMagisk/releases/download/v27.2-kitsune-4/app-release.apk"
-      else
-        echo -e "Normal Magisk downloaded."
-        get "magisk" "${MAGISK[URL]}/releases/download/canary-${VERSION[MAGISK]}/app-release.apk"
+      fi
+
+      if [[ "${DEVICE_TYPE}" == "apatch" ]]; then
+        echo -e "APatch downloaded."
+        get "magisk" "https://github.com/bmax121/APatch/releases/download/11107/APatch_11107_11107-release-signed.apk"
       fi
       verify_downloads "magisk"
 
@@ -225,8 +237,6 @@ function patch_ota() {
       echo -e "Magisk is enabled. Modifying the setup script...\n"
       args+=("--patch-arg=--magisk" "--patch-arg" "${magisk_path}")
       args+=("--patch-arg=--magisk-preinit-device" "--patch-arg" "${MAGISK[PREINIT]}")
-    else
-      echo -e "Magisk is not enabled. Skipping...\n"
     fi
 
     # Python command to run the patch script
@@ -453,10 +463,24 @@ function make_directories() {
 
 function generate_ota_info() {
   # Detect build flavor
-  if [[ "${KITSUNE}" == "true" ]]; then
-    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "kitsunemagisk-v27.2-kitsune-4" || echo "rootless")
-  else
-    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "magisk-${VERSION[MAGISK]}" || echo "rootless")
+  if [[ "${ROOT_TYPE}" == "magisk" ]]; then
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "magisk")
+  fi
+
+  if [[ "${ROOT_TYPE}" == "pixincreatemagisk" ]]; then
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "pixincreatemagisk")
+  fi
+
+  if [[ "${ROOT_TYPE}" == "kitsunemagisk" ]]; then
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "kitsunemagisk")
+  fi
+
+  if [[ "${ROOT_TYPE}" == "apatch" ]]; then
+    local flavor=$([[ ${ADDITIONALS[ROOT]} == 'true' ]] && echo "apatch")
+  fi
+
+  if [[ "${ROOT}" == "false" ]]; then
+    echo "rootless"
   fi
   # e.g. bluejay-2024082200-rootless-abc12345-dirty.zip
   OUTPUTS[PATCHED_OTA]="${DEVICE_NAME}-${VERSION[GRAPHENEOS]}-${flavor}-$(git rev-parse --short HEAD)$(dirty_suffix).zip"

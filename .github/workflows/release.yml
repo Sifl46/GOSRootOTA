@@ -15,11 +15,10 @@ on:
         required: false
         type: boolean
         default: false
-      kitsune:
-        description: Use KitsuneMagisk
+      root-type:
+        description: Type of Root to install. Supports `magisk`(not recommended), `pixincreatemagisk` and `kitsunemagisk`. Defaults to `pixincreatemagisk`
         required: false
-        type: boolean
-        default: false
+        default: pixincreatemagisk
       magisk-preinit-device:
         description: Magisk preinit device. For example, "sda8", "sda15" etc.,
         required: false
@@ -39,7 +38,8 @@ on:
 env:
   CARGO_INCREMENTAL: 1
   DEVICE_NAME: ${{ github.event.inputs.device-id }}
-  KITSUNE: ${{ github.event.inputs.kitsune }}
+  ROOT: ${{ github.event.inputs.root }}
+  ROOT_TYPE: ${{ github.event.inputs.root-type }}
   INTERACTIVE_MODE: false
   GRAPHENEOS_UPDATE_CHANNEL: ${{ github.event.inputs.update-channel }}
   RUST_BACKTRACE: short
@@ -98,7 +98,12 @@ jobs:
         if: github.event_name == 'schedule' || github.event.inputs.release-type == 'default'
         run: |
           # Determine if the build is based on magisk or rootless (build flavor)
-          build_flavor=$([[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'false' }} == 'true' ]]  && echo 'magisk' || [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.kitsune == 'true' }} == 'true' ]] && echo 'kitsunemagisk' || echo 'rootless')
+          build_flavor=$(
+          [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.root-type == 'magisk' }} == 'true' ]]  && echo 'magisk' || 
+          [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.root-type == 'pixincreatemagisk' }} == 'true' ]] && echo 'pixincreatemagisk' || 
+          [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.root-type == 'kitsunemagisk' }} == 'true' ]] && echo 'kitsunemagisk' || 
+          [[ ${{ github.event.inputs.root == 'true' }} == 'true' ]] && [[ ${{ github.event.inputs.root-type == 'apatch' }} == 'true' ]] && echo 'apatch' || 
+          echo 'rootless')
 
           # Check if the tag exists
           if git show-ref --tags $GRAPHENEOS_VERSION --quiet; then
@@ -111,8 +116,12 @@ jobs:
             required_assets=(
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-magisk-*.zip"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-magisk-*.zip.csig"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-pixincreatemagisk-*.zip"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-pixincreatemagisk-*.zip.csig"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-kitsunemagisk-*.zip"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-kitsunemagisk-*.zip.csig"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-apatch-*.zip"
+              "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-apatch-*.zip.csig"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-rootless-*.zip"
               "${{ env.DEVICE_NAME }}-$GRAPHENEOS_VERSION-rootless-*.zip.csig"
             )
@@ -151,8 +160,13 @@ jobs:
                 fi
               done
 
-              # Check if valid_build is either "magisk", "kitsunemagisk" or "rootless"
-              if [[ "$valid_build" == "magisk" ]] || [[ "$valid_build" == "kitsunemagisk" ]] || [[ "$valid_build" == "rootless" ]]; then
+              # Check if valid_build is either "magisk", "pixincreatemagisk", "kitsunemagisk", "apatch" or "rootless"
+              if (
+              [[ "$valid_build" == "magisk" ]] || 
+              [[ "$valid_build" == "pixincreatemagisk" ]] || 
+              [[ "$valid_build" == "kitsunemagisk" ]] || 
+              [[ "$valid_build" == "apatch" ]] || 
+              [[ "$valid_build" == "rootless" ]]); then
                 echo -e "Proceeding with build to create missing assets..."
               else
                 echo -e "::error::Asset with \`$build_flavor\` flavor already exists!"
@@ -228,28 +242,36 @@ jobs:
         if: github.event.inputs.release-type != 'build-only'
         run: |
           CURRENT_COMMIT=$(git rev-parse --short HEAD)
-          FLAVOR=("magisk" "kitsunemagisk" "rootless")
+          FLAVOR=("magisk" "pixincreatemagisk" "kitsunemagisk" "apatch" "rootless")
           root=${{ github.event.inputs.root }}
-          kitsune=${{ github.event.inputs.kitsune }}
+          roottype=${{ github.event.inputs.root-type }}
 
-          # Create `magisk`, `kitsunemagisk` and `rootless` directories if they don't exist
+          # Create `magisk`, `pixincreatemagisk`, `kitsunemagisk`, `apatch` and `rootless` directories if they don't exist
           mkdir -p "${FLAVOR}"
 
           # Switch to gh-pages branch
           git checkout gh-pages
           echo -e "Updating Configs for the new release..."
 
-          # If root is true or the the release has `magisk` in <device_name>.json, use magisk flavor
-          if [ "${root}" = "true" ] && [ "${kitsune}" = "false" ] && grep -q magisk "${{ env.DEVICE_NAME }}.json"; then
+          # Figure out the flavor we want to use
+          if [ "${root}" = "true" ] && [ "${roottype}" = "magisk" ]; then
             TARGET_FILE="${FLAVOR[0]}/${{ env.DEVICE_NAME }}.json"
           fi
-          
-          if [ "${root}" = "true" ] && [ "${kitsune}" = "true" ] && grep -q kitsunemagisk "${{ env.DEVICE_NAME }}.json"; then
+
+          if [ "${root}" = "true" ] && [ "${roottype}" = "pixincreatemagisk" ]; then
             TARGET_FILE="${FLAVOR[1]}/${{ env.DEVICE_NAME }}.json"
           fi
-
-          if [ "${root}" = "false" ] && [ "${kitsune}" = "false" ]; then
+          
+          if [ "${root}" = "true" ] && [ "${roottype}" = "kitsunemagisk" ]; then
             TARGET_FILE="${FLAVOR[2]}/${{ env.DEVICE_NAME }}.json"
+          fi
+
+          if [ "${root}" = "true" ] && [ "${roottype}" = "apatch" ]; then
+            TARGET_FILE="${FLAVOR[3]}/${{ env.DEVICE_NAME }}.json"
+          fi
+
+          if [ "${root}" = "false" ]; then
+            TARGET_FILE="${FLAVOR[4]}/${{ env.DEVICE_NAME }}.json"
           fi
 
           echo -e "Updating Configs for the new release..."
