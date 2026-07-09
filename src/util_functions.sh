@@ -210,17 +210,11 @@ function patch_ota() {
 
     # Modules
     args+=("--module-custota" "${WORKDIR}/modules/custota.zip")
-    args+=("--module-msd" "${WORKDIR}/modules/msd.zip")
-    args+=("--module-bcr" "${WORKDIR}/modules/bcr.zip")
     args+=("--module-oemunlockonboot" "${WORKDIR}/modules/oemunlockonboot.zip")
-    args+=("--module-alterinstaller" "${WORKDIR}/modules/alterinstaller.zip")
 
     # Module signatures
     args+=("--module-custota-sig" "${WORKDIR}/signatures/custota.zip.sig")
-    args+=("--module-msd-sig" "${WORKDIR}/signatures/msd.zip.sig")
-    args+=("--module-bcr-sig" "${WORKDIR}/signatures/bcr.zip.sig")
     args+=("--module-oemunlockonboot-sig" "${WORKDIR}/signatures/oemunlockonboot.zip.sig")
-    args+=("--module-alterinstaller-sig" "${WORKDIR}/signatures/alterinstaller.zip.sig")
 
     # Add support for Magisk if root config is enabled
     if [[ "${ADDITIONALS[ROOT]}" == 'true' ]]; then
@@ -491,7 +485,7 @@ function check_toml_env() {
 
 function supported_tools() {
   local arg="${1:-}"
-  local tools=("avbroot" "afsr" "alterinstaller" "custota" "custota-tool" "msd" "bcr" "oemunlockonboot" "my-avbroot-setup")
+  local tools=("avbroot" "afsr" "custota" "custota-tool" "oemunlockonboot" "my-avbroot-setup")
 
   if [[ "${arg}" == "cdd" ]]; then
     echo "${tools[@]}"

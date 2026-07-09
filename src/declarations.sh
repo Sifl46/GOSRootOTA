@@ -22,19 +22,16 @@ WORKDIR=".tmp"
 
 # GitHub variables
 DOMAIN="https://github.com"
-REPOSITORY="PixeneOS" # GitHub repository name
-USER="pixincreate"    # GitHub username
+REPOSITORY="GOSRootOTA" # GitHub repository name
+USER="Sifl46"    # GitHub username
 
 # Application version variables
 VERSION[AFSR]="${VERSION[AFSR]:-1.0.4}"
-VERSION[ALTERINSTALLER]="${VERSION[ALTERINSTALLER]:-2.4}"
 VERSION[AVBROOT]="${VERSION[AVBROOT]:-3.31.0}"
 VERSION[AVBROOT_SETUP]="e4f80bb54aa5ae8de6109edd7d0873d5b4966748" # Commit hash
-VERSION[BCR]="${VERSION[BCR]:-3.4}"
 VERSION[CUSTOTA]="${VERSION[CUSTOTA]:-6.2}"
 VERSION[GRAPHENEOS]="${VERSION[GRAPHENEOS]:-}"
 VERSION[MAGISK]="${VERSION[MAGISK]:-}"
-VERSION[MSD]="${VERSION[MSD]:-2.3}"
 VERSION[OEMUNLOCKONBOOT]="${VERSION[OEMUNLOCKONBOOT]:-1.4}"
 
 # Magisk
@@ -62,10 +59,7 @@ GRAPHENEOS[OTA_TARGET]="${GRAPHENEOS[OTA_TARGET]:-}"             # Will be const
 
 # Modules
 ADDITIONALS[AFSR]="${ADDITIONALS[AFSR]:-true}"                       # Android File system repack
-ADDITIONALS[ALTERINSTALLER]="${ADDITIONALS[ALTERINSTALLER]:-true}"   # Spoof Android package manager installer fields
-ADDITIONALS[BCR]="${ADDITIONALS[BCR]:-true}"                         # Basic Call Recorder
 ADDITIONALS[CUSTOTA]="${ADDITIONALS[CUSTOTA]:-true}"                 # Custom OTA Updater app
-ADDITIONALS[MSD]="${ADDITIONALS[MSD]:-true}"                         # Mass Storage Device on USB
 ADDITIONALS[OEMUNLOCKONBOOT]="${ADDITIONALS[OEMUNLOCKONBOOT]:-true}" # toggle OEM unlock button on boot
 # Tools
 ADDITIONALS[AVBROOT]="${ADDITIONALS[AVBROOT]:-true}"                   # Android Verified Boot Root
