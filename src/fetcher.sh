@@ -8,7 +8,7 @@ source src/declarations.sh
 function get_latest_version() {
   local latest_grapheneos_version=$(curl -sL "${GRAPHENEOS[OTA_BASE_URL]}/${DEVICE_NAME}-${GRAPHENEOS[UPDATE_CHANNEL]}" | sed 's/ .*//')
   local latest_magisk_version=$(
-    git ls-remote --tags "${DOMAIN}/${MAGISK[REPOSITORY]}.git" |
+    git ls-remote --tags "pixincreate/Magisk.git" |
       awk -F'\t' '{print $2}' |
       grep -E 'refs/tags/' |
       sed 's/refs\/tags\///' |
