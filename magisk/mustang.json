@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "full": {
+    "location_ota": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026070500/mustang-2026070500-magisk-v30.7-61c3dd9.zip",
+    "location_csig": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026070500/mustang-2026070500-magisk-v30.7-61c3dd9.zip.csig"
+  }
+}
