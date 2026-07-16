@@ -1,7 +1,7 @@
 {
   "version": 2,
   "full": {
-    "location_ota": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026071100/mustang-2026071100-rootless-61c3dd9.zip",
-    "location_csig": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026071100/mustang-2026071100-rootless-61c3dd9.zip.csig"
+    "location_ota": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026071500/mustang-2026071500-rootless-541dd32.zip",
+    "location_csig": "https://github.com/Sifl46/GOSRootOTA/releases/download/2026071500/mustang-2026071500-rootless-541dd32.zip.csig"
   }
 }
